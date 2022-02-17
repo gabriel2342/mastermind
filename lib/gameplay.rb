@@ -22,16 +22,16 @@ class Gameplay < CompCodeBreak
     move = code.clone
 
     guess_array.each_with_index do |num, i|
-      if num == code[i]
-        @matches << num
-        move.delete_at(move.index(num) || move.length)
-        player_guess.delete_at(player_guess.index(num)|| player_guess.length)
-      end
+      next unless num == code[i]
+
+      @matches << num
+      move.delete_at(move.index(num) || move.length)
+      player_guess.delete_at(player_guess.index(num) || player_guess.length)
     end
-  
+
     player_guess.each do |num|
-      if move.include?(num) 
-        @partials_count +=1 
+      if move.include?(num)
+        @partials_count += 1
         move.delete_at(move.index(num || move.length))
       end
     end
