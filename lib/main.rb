@@ -7,8 +7,15 @@ MAX_GUESS = 12
 
 class MasterMind < Gameplay
   include Display
+  attr_accessor :play_choice, :player_guess, :player_guess_array
 
-  def initialize; end
+  def initialize
+    @play_choice = ""
+    @player_guess = ""
+    @player_guess_array = []
+    @comp_code = []
+    super
+  end
 
   def secret_code
     # @comp_code = [rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
@@ -34,14 +41,14 @@ class MasterMind < Gameplay
 
   def play_game
     game_type_choice
+
     if @play_choice == 'breaker'
       counter = MAX_GUESS
       MAX_GUESS.times do 
         player_guess
         peg_hint(@comp_code, @player_guess_array)
-        
+        display_matches_and_partials(@matches.size, @partials_count)
         counter -= 1
-
         if winner?(@player_guess)
           puts display_chicken
           break
@@ -49,13 +56,17 @@ class MasterMind < Gameplay
           puts display_womp_womp
           break
         end
-
         puts display_guesses_remaining(counter)
       end
+
     elsif @play_choice == 'maker'
       player_code_get
-      first_move
-      comp_peg_hint
+  
+      10.times do 
+        comp_code_cull
+        computer_move
+        puts "The computer has guessed #{@comp_move}"
+      end
     end
   end
 

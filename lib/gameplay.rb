@@ -5,8 +5,13 @@ require_relative 'comp_breaker'
 
 class Gameplay < CompCodeBreak
   include Display
+  attr_accessor :matches, :partials_count
 
-  def initialize; end
+  def initialize
+    @matches = []
+    @partials_count = 0
+    super
+  end
 
   def validate_player_guess; end
 
@@ -31,7 +36,6 @@ class Gameplay < CompCodeBreak
       end
     end
 
-    display_matches_and_partials(@matches.size, @partials_count)
-    @peg_array = [@matches.size, @partials_count]
+    [@matches.size, @partials_count]
   end
 end
