@@ -15,14 +15,14 @@ class Gameplay < CompCodeBreak
 
   def validate_player_guess; end
 
-  def peg_hint(code, guess_array)
+  def peg_hint(code_array, guess_arr)
     @matches = []
     @partials_count = 0
-    player_guess = guess_array.clone
-    move = code.clone
+    player_guess = guess_arr.clone
+    move = code_array.clone
 
-    guess_array.each_with_index do |num, i|
-      next unless num == code[i]
+    guess_arr.each_with_index do |num, i|
+      next unless num == code_array[i]
 
       @matches << num
       move.delete_at(move.index(num) || move.length)

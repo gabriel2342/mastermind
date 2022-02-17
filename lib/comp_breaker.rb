@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CompCodeBreak
-  attr_accessor :comp_move, :total_code, :comp_code
+  attr_accessor :comp_move, :total_code, :comp_code, :comp_guess
 
   def initialize
     @comp_move = [1, 1, 2, 2]
@@ -14,7 +14,7 @@ class CompCodeBreak
 
 
   def player_code_array
-    guess_array(@player_secret_code)
+    make_array(@player_secret_code)
   end
 
   def player_code_get
@@ -22,7 +22,7 @@ class CompCodeBreak
     @player_secret_code = gets.chomp
   end
   
-  def guess_array(string)
+  def make_array(string)
     string.chars.map(&:to_i)
   end
 
@@ -30,15 +30,18 @@ class CompCodeBreak
     peg_hint(player_code_array, move)
   end
 
-  def comp_code_cull
-    comp_guess = @comp_set[0].to_s.chars.map(&:to_i)
-    @comp_set.delete_at(0)
-    @comp_set.each do |digits|
-      @comp_set.delete(digits) if comp_peg_hint(guess_array(digits.to_s)) != comp_peg_hint(comp_guess)
+
+  def comp_code_cull  
+    10.times do 
+      @comp_guess = @comp_set.shift.to_s.chars.map(&:to_i)
+      break if @comp_guess == player_code_array
+      p @comp_guess
+      @comp_set = @comp_set.reject do |digits| 
+        comp_peg_hint(make_array(digits.to_s)) != comp_peg_hint(@comp_guess)
+      end
     end
+    @comp_guess
   end
 
-  def comp_winner?
-    @comp_move == @player_secret_code
-  end
+  
 end

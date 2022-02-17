@@ -30,7 +30,7 @@ class MasterMind < Gameplay
   def player_guess
     puts display_enter_guess
     @player_guess = gets.chomp
-    @player_guess_array = guess_array(@player_guess)
+    @player_guess_array = make_array(@player_guess)
   end
 
   def winner?(guess)
@@ -60,9 +60,7 @@ class MasterMind < Gameplay
 
     when 'maker'
       player_code_get
-      10.times do
-        comp_code_cull
-      end
+      p "The guess is #{comp_code_cull}"
     end
   end
 end
