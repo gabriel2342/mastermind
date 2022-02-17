@@ -62,8 +62,6 @@ class MasterMind < Gameplay
       player_code_get
       10.times do
         comp_code_cull
-        computer_move
-        puts "The computer has guessed #{@comp_move}"
       end
     end
   end

@@ -7,6 +7,7 @@ class CompCodeBreak
     @comp_move = [1, 1, 2, 2]
     @total_code = []
     (1111..6666).each { |num| @total_code << num if num.to_s.match(/^[1-6]{4}$/) }
+    total_code.unshift(1122)
     @comp_set = @total_code.dup.uniq
     super
   end
@@ -25,7 +26,7 @@ class CompCodeBreak
   end
 
   def computer_move
-    @comp_move = @comp_set.shift.to_s.chars.map(&:to_i)
+    @comp_set[0].to_s.chars.map(&:to_i)
   end
 
   def comp_peg_hint(move)
@@ -33,9 +34,10 @@ class CompCodeBreak
   end
 
   def comp_code_cull
-    comp_pegs = comp_peg_hint(@comp_move)
+    p @comp_set
+    
     @comp_set.each do |digits|
-      @comp_set.delete(digits) if guess_array(digits.to_s) != comp_pegs
+      @comp_set.delete(digits) if guess_array(digits.to_s) != comp_peg_hint(computer_move)
     end
   end
 
