@@ -30,10 +30,9 @@ class CompCodeBreak
     peg_hint(player_code_array, move)
   end
 
-
   def comp_code_cull  
     10.times do 
-      @comp_guess = @comp_set.shift.to_s.chars.map(&:to_i)
+      @comp_guess = make_array(@comp_set.shift.to_s)
       break if @comp_guess == player_code_array
       p @comp_guess
       @comp_set = @comp_set.reject do |digits| 
