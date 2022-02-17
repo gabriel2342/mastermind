@@ -12,9 +12,6 @@ class CompCodeBreak
     super
   end
 
-  def guess_array(string)
-    string.chars.map(&:to_i)
-  end
 
   def player_code_array
     guess_array(@player_secret_code)
@@ -24,9 +21,9 @@ class CompCodeBreak
     puts display_player_enter_code
     @player_secret_code = gets.chomp
   end
-
-  def computer_move
-    @comp_set[0].to_s.chars.map(&:to_i)
+  
+  def guess_array(string)
+    string.chars.map(&:to_i)
   end
 
   def comp_peg_hint(move)
@@ -34,10 +31,10 @@ class CompCodeBreak
   end
 
   def comp_code_cull
-    p @comp_set
-    
+    comp_guess = @comp_set[0].to_s.chars.map(&:to_i)
+    @comp_set.delete_at(0)
     @comp_set.each do |digits|
-      @comp_set.delete(digits) if guess_array(digits.to_s) != comp_peg_hint(computer_move)
+      @comp_set.delete(digits) if comp_peg_hint(guess_array(digits.to_s)) != comp_peg_hint(comp_guess)
     end
   end
 
