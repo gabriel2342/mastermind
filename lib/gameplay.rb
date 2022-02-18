@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative 'display'
-require_relative 'comp_breaker'
 
-class Gameplay < CompCodeBreak
+#This class creates the hints for the player or computer
+class GamePlay 
   include Display
-  attr_accessor :matches, :partials_count
+  attr_reader :matches, :partials_count
 
   def initialize
     @matches = []
@@ -14,6 +14,29 @@ class Gameplay < CompCodeBreak
   end
 
   def validate_player_guess; end
+  
+  def delete_element(ele, number)
+    ele.delete_at(ele.index(number) || ele.length)
+  end
+
+
+  def matches(guess, play_guess, code, mov)
+    guess.each_with_index do |num, index|
+      next unless num == code[index]
+      @matches << num
+      delete_element(mov, num)      
+      delete_element(play_guess, num)
+    end
+  end
+
+  def partials(guess, mov)
+    guess.each do |num|
+      if mov.include?(num)
+        @partials_count += 1
+        delete_element(mov, num)
+      end
+    end
+  end
 
   def peg_hint(code_array, guess_arr)
     @matches = []
@@ -21,21 +44,10 @@ class Gameplay < CompCodeBreak
     player_guess = guess_arr.clone
     move = code_array.clone
 
-    guess_arr.each_with_index do |num, i|
-      next unless num == code_array[i]
-
-      @matches << num
-      move.delete_at(move.index(num) || move.length)
-      player_guess.delete_at(player_guess.index(num) || player_guess.length)
-    end
-
-    player_guess.each do |num|
-      if move.include?(num)
-        @partials_count += 1
-        move.delete_at(move.index(num || move.length))
-      end
-    end
-
+    matches(guess_arr, player_guess, code_array, move)
+    partials(player_guess, move)
+    
     [@matches.size, @partials_count]
   end
+
 end
