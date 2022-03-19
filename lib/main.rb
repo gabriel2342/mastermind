@@ -11,7 +11,7 @@ class MasterMind < CompCodeBreak
   end
 
   def play_game
-    game_type_choice
+    game_type_choice 
 
     case @play_choice
     when 'breaker'
