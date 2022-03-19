@@ -32,7 +32,7 @@ game.secret_code
 until play_again == 'no'
   game.play_game
   puts "\n==> Would you like to play another game?"
-  print "==> Type 'no' to exit: "
+  print "==> Type 'no' to exit or 'yes' to continue: "
   play_again = gets.chomp.downcase
 end
 puts "==> Thanks for playing! Goodbye."

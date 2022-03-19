@@ -24,6 +24,11 @@ class CompCodeBreak < PlayerCodeBreak
   def player_code_get
     puts display_player_enter_code
     @player_secret_code = gets.chomp
+    until validate_code(@player_secret_code)
+      puts "\n==> WARNING: Your code must be 4 integers."
+      puts display_player_enter_code
+      @player_secret_code = gets.chomp
+    end
   end
 
   def comp_peg_hint(move)
