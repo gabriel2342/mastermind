@@ -12,9 +12,12 @@ class GamePlay
     @partials_count = 0
     super
   end
-
-  def validate_player_guess; end
   
+  def validate_code(code)
+    return true if code.size == 4 && code =~ /\A\d+\z/ 
+    false
+  end
+
   def delete_element(ele, number)
     ele.delete_at(ele.index(number) || ele.length)
   end

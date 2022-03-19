@@ -19,6 +19,11 @@ class PlayerCodeBreak < GamePlay
   def player_guess
     puts display_enter_guess
     @player_code_guess = gets.chomp
+    until validate_code(@player_code_guess)
+      puts "\n==> WARNING: Your code must be 4 integers."
+      puts display_enter_guess
+      @player_code_guess = gets.chomp
+    end
     @player_guess_array = make_array(@player_code_guess)
   end
 

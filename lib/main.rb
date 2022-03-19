@@ -5,10 +5,13 @@ require_relative 'comp_breaker'
 #Class where the main gameplay is managed.
 class MasterMind < CompCodeBreak
 
+
   def game_type_choice
-    puts display_player_choice
+    display_banner
+    display_player_choice
     @play_choice = gets.chomp
   end
+
 
   def play_game
     game_type_choice 
@@ -23,6 +26,13 @@ class MasterMind < CompCodeBreak
   end
 end
 
+play_again = ''
 game = MasterMind.new
-p game.secret_code
-game.play_game
+game.secret_code
+until play_again == 'no'
+  game.play_game
+  puts "\n==> Would you like to play another game?"
+  print "==> Type 'no' to exit: "
+  play_again = gets.chomp.downcase
+end
+puts "==> Thanks for playing! Goodbye."
